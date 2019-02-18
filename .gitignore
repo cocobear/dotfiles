@@ -1,0 +1,8 @@
+
+##### BLACKLIST #####
+
+# Library
+Library
+
+.DS_Store
+*/.DS_Store

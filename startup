@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+#
+
+DOTFILES_ROOT=$(pwd -P)
+
+set -e
+
+echo ''
+
+info () {
+  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
+
+user () {
+  printf "\r  [ \033[0;33m?\033[0m ] $1 "
+}
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
+
+install_cmd_tools() {
+# install command line tools without UI
+# instead of `xcode-select --install`
+  if test ! $(which git)
+  then
+	touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+	PROD=$(softwareupdate -l |
+		grep "\*.*Command Line" |
+		head -n 1 | awk -F"*" '{print $2}' |
+		sed -e 's/^ *//' |
+		tr -d '\n')
+	softwareupdate -i "$PROD" --verbose;
+	rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+  fi
+}
+
+
+install_homebrew () {
+  if test ! $(which brew)
+  then
+    info "  Installing Homebrew for you..."
+
+    # Install the correct homebrew for each OS type
+    if test "$(uname)" = "Darwin"
+    then
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
+    then
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+    fi
+
+  fi
+}
+
+install_ohmyzsh () {
+  if [ ! -d ~/.oh-my-zsh ]
+  then
+    info '  Installing oh-my-zsh'
+    curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+  fi
+}
+
+install_zplug () {
+  if [ ! -d ~/.zplug ]
+  then
+    info '  Installing zplug'
+    curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
+    sudo chsh -s /bin/zsh
+  fi
+
+}
+
+
+restore_with_mackup () {
+  if [ ! -f ~/.mackup.cfg ]
+  then
+    info ' copy mackup.cfg'
+    cp .mackup.cfg ~/
+  fi
+  mackup restore
+}
+install_nvim_plugins () {
+
+  if [ ! -f ~/.local/share/nvim/site/autoload/plug.vim ]
+  then
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  fi
+  info 'Install nvim plugins'
+  nvim -c PlugInstall -c qa
+  info 'plug install finished'
+}
+
+
+
+install_cmd_tools
+install_homebrew
+#install_ohmyzsh
+install_zplug
+
+# Install apps
+#brew update
+#brew bundle
+
+install_nvim_plugins
+restore_with_mackup
+
+# Set macOS defaults
+$DOTFILES_ROOT/macos/set-defaults.sh

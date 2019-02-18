@@ -1,0 +1,32 @@
+#!/bin/bash
+
+function tabc() {
+  NAME=$1; if [ -z "$NAME" ]; then NAME="Default"; fi
+  echo -e "\033]50;SetProfile=$NAME\a"
+}
+
+function tab-reset() {
+    NAME="Default"
+    echo -e "\033]50;SetProfile=$NAME\a"
+    iterm2_set_user_var SSH_SERVER 
+}
+
+function colorssh() {
+    iterm2_set_user_var SSH_SERVER $*
+    if [[ -n "$ITERM_SESSION_ID" ]]; then
+        trap "tab-reset" INT EXIT
+        if [[ "$*" =~ "production*" ]]; then
+            tabc Production
+        elif [[ "$*" =~ "staging*" ]]; then
+            tabc Staging
+        elif [[ "$*" =~ "192.*" ]]; then
+            tabc server
+        else
+            tabc Other
+        fi
+    fi
+    /usr/bin/ssh $*
+}
+# compdef _ssh tabc=ssh
+
+alias ssh="colorssh"

@@ -1,0 +1,14 @@
+[user]
+    name = cocobear
+    email = cocobear.cn@gmail.com
+[core]
+    whitespace = cr-at-eol
+    autocrlf = false
+    saftcrlf = true
+	fileMode = false
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+[alias]
+    dif = difftool --dir-diff
