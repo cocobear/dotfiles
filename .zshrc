@@ -3,6 +3,8 @@
 
 zmodload zsh/zprof
 
+# SHOULD before theme load
+POWERLEVEL9K_MODE='nerdfont-complete'
 
 # For zplug
 #source /usr/local/opt/zplug/init.zsh
@@ -80,7 +82,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ############################
 #### FOR POWERLEVEL9K ######
 ############################
-POWERLEVEL9K_MODE='nerdfont-complete'
 DEFAULT_USER=cocobear
 POWERLEVEL9K_ALWAYS_SHOW_USER=false
 POWERLEVEL9K_CONTEXT_TEMPLATE="%n"
