@@ -1,0 +1,57 @@
+{
+	"auto_upgrade": false,
+	"auto_upgrade_ignore":
+	[
+	],
+	"auto_upgrade_last_run": null,
+	"bootstrapped": true,
+	"channels":
+	[
+		"https://raw.githubusercontent.com/JavenZ/channel_v3/master/channel_v3.json"
+	],
+	"http_proxy": "http://127.0.0.1:1087",
+	"https_proxy": "http://127.0.0.1:1087",
+	"in_process_packages":
+	[
+		"IMESupport"
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"All Autocomplete",
+		"Anaconda",
+		"AutoPEP8",
+		"BracketHighlighter",
+		"Codecs33",
+		"Color Highlighter",
+		"ColorHelper",
+		"ColorPicker",
+		"ConvertToUTF8",
+		"DocBlockr",
+		"Dracula Color Scheme",
+		"Emmet",
+		"ESLint-Formatter",
+		"Git",
+		"GitGutter",
+		"gruvbox",
+		"HTML-CSS-JS Prettify",
+		"IMESupport",
+		"MarkdownHighlighting",
+		"MarkdownPreview",
+		"Package Control",
+		"RawLineEdit",
+		"SFTP",
+		"SideBarEnhancements",
+		"Solarized Color Scheme",
+		"SublimeLinter-eslint",
+		"Terminal",
+		"Theme - Gravity",
+		"Theme - Soda",
+		"Vue Syntax Highlight",
+		"Vuetify"
+	],
+	"repositories":
+	[
+		"https://github.com/n1k0/SublimeHighlight/tree/python3"
+	]
+}

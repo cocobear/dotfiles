@@ -46,6 +46,8 @@ zplug load
 #
 #source $ZSH/oh-my-zsh.sh
 
+
+alias vi='nvim'
 # add a function path
 fpath=(~$USER/.config/functions $fpath)
 autoload ${fpath[1]}/*(:t)
@@ -87,7 +89,7 @@ POWERLEVEL9K_ALWAYS_SHOW_USER=false
 POWERLEVEL9K_CONTEXT_TEMPLATE="%n"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir virtualenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time vi_mode)
 POWERLEVEL9K_STATUS_VERBOSE=false
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
