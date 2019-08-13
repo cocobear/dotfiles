@@ -226,7 +226,8 @@ Plug 'ianva/vim-youdao-translater'
 Plug 'matze/vim-move'
 Plug 'pbrisbin/vim-mkdir'
 "Perhaps may try LeaderF
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 "Plugins for golang
 "Plug 'fatih/vim-go', { 'for': 'go' }
