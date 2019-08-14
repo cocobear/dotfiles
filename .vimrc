@@ -296,7 +296,6 @@ let g:airline#extensions#tabline#left_sep = ' '
 " tabline中未激活buffer两端的分隔字符
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#hunks#enabled = 0
-let g:airline_section_y = '%{strftime("%H:%M")}'
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_detect_crypt=1
