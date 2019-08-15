@@ -18,6 +18,7 @@ brew 'colordiff'
 brew 'diff-so-fancy
 brew 'ssh-copy-id'
 brew 'highlight'
+brew 'exa'
 
 #brew 'bash'
 brew 'coreutils'
