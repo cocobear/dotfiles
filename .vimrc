@@ -92,12 +92,14 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
     call dein#add('liuchengxu/vista.vim')
     call dein#add('SirVer/ultisnips')
     call dein#add('dhruvasagar/vim-zoom')
+    call dein#add('luochen1990/rainbow')
+    call dein#add('mhinz/vim-startify')
+    call dein#add('mg979/vim-visual-multi')
 
     " Colorschemes
     call dein#add('petobens/colorish', {'frozen': 1})
     "call dein#add('tomasr/molokai')
     call dein#add('morhetz/gruvbox')
-    call dein#add('wsdjeg/dein-ui.vim')
     "call dein#add('vim-airline/vim-airline-themes')
 
     " Tim Pope editing/coding plugins
@@ -1320,6 +1322,12 @@ augroup END
 " }}}
 " Plugin settings {{{
 
+" Rainbow {{{
+
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+" }}}
+
 " Airline {{{
 
 " Vim settings
@@ -1452,7 +1460,7 @@ augroup END
 
 " Actually set the colorscheme and airline theme
 let g:one_allow_italics = 1  " use italics with onedarkish theme
-colorscheme onedarkish  " alternatives are heraldish and onedarkish
+"colorscheme onedarkish  " alternatives are heraldish and onedarkish
 colorscheme gruvbox
 "colorscheme molokai
 let g:airline_theme = g:colors_name
@@ -1486,19 +1494,20 @@ augroup END
 " }}}
 " Defx {{{
 
+
 call defx#custom#option('_', {
             \ 'show_ignored_files': 1,
-            \ 'winwidth': 43,
+            \ 'winwidth': 32,
             \ 'split': 'vertical',
             \ 'direction': 'topleft',
-            \ 'columns': 'mark:indent:icon:filename:icons:size:git',
-            \ 'root_marker': '﬌ '
+            \ 'columns': 'git:indent:icon:icons:filename:type',
+            \ 'root_marker': '﬌ ',
             \ })
 call defx#custom#column('mark', {
             \ 'readonly_icon': '',
             \ 'selected_icon': '',
             \ })
-call defx#custom#column('indent', { 'indent': '  '})
+"call defx#custom#column('indent', { 'indent': '  '})
 call defx#custom#column('icon', {
             \ 'root_icon': ' ',
             \ 'directory_icon': '',
@@ -1529,35 +1538,25 @@ nnoremap <silent> <Leader>fr :Defx -resume<CR>
 nnoremap <silent> <Leader>fm :call <SID>TmuxSplitCmd('ranger', '')<CR>
 
 " Devicons
-let g:defx_icons_enable_syntax_highlight = 0
-let g:defx_icons_extensions = {
-            \ 'tex': {'icon': ''},
-            \ 'bib': {'icon': ''},
-            \ 'gitcommit': {'icon': ''},
-            \ 'pdf': {'icon': ''},
-            \ 'r': {'icon': 'ﳒ'},
-            \ 'R': {'icon': 'ﳒ'},
-            \ }
-let g:defx_icons_exact_matches = {
-            \ '.gitconfig': {'icon': ''},
-            \ '.gitignore': {'icon':''},
-            \ 'bashrc': {'icon': ''},
-            \ '.bashrc': {'icon': ''},
-            \ 'bash_profile': {'icon':''},
-            \ '.bash_profile': {'icon':''},
-            \ }
-let g:defx_icon_exact_dir_matches = {
-            \ '.git'     : {'icon': ''},
-            \ 'Desktop'  : {'icon': ''},
-            \ 'Documents': {'icon': ''},
-            \ 'Downloads': {'icon': ''},
-            \ 'Dropbox'  : {'icon': ''},
-            \ 'Music'    : {'icon': ''},
-            \ 'Pictures' : {'icon': ''},
-            \ 'Public'   : {'icon': ''},
-            \ 'Templates': {'icon': ''},
-            \ 'Videos'   : {'icon': ''},
-            \ }
+
+let g:defx_icons_enable_syntax_highlight = 1
+let g:defx_icons_column_length = 2
+let g:defx_icons_directory_icon = ''
+let g:defx_icons_mark_icon = '*'
+let g:defx_icons_parent_icon = ''
+let g:defx_icons_default_icon = ''
+let g:defx_icons_directory_symlink_icon = ''
+" Options below are applicable only when using "tree" feature
+let g:defx_icons_root_opened_tree_icon = ''
+let g:defx_icons_nested_opened_tree_icon = ''
+let g:defx_icons_nested_closed_tree_icon = ''
+hi default link DefxIconsMarkIcon Statement
+hi default link DefxIconsDirectory Directory
+hi default link DefxIconsParentDirectory Directory
+hi default link DefxIconsSymlinkDirectory Directory
+hi default link DefxIconsOpenedTreeIcon Directory
+hi default link DefxIconsNestedTreeIcon Directory
+hi default link DefxIconsClosedTreeIcon Directory
 
 " Git
 call defx#custom#column('git', 'indicators', {
@@ -1588,7 +1587,8 @@ endfunction
 augroup ps_defx
     au!
     au FileType defx call s:defx_settings()
-    au FileType defx setlocal relativenumber
+    au FileType defx setlocal norelativenumber
+    au FileType defx setlocal nonumber
 augroup END
 
 
@@ -3338,3 +3338,5 @@ endfunction
 " }}}
 
 " }}}
+
+
