@@ -1558,11 +1558,25 @@ hi default link DefxIconsOpenedTreeIcon Directory
 hi default link DefxIconsNestedTreeIcon Directory
 hi default link DefxIconsClosedTreeIcon Directory
 
+let g:defx_git#column_length = 1
+let g:defx_git#show_ignored = 0
+let g:defx_git#raw_mode = 0
+
+hi Defx_git_0_Untracked ctermfg=12 guifg=#81a2be
+hi Defx_git_0_Ignored   ctermfg=8  guifg=#404660
+hi Defx_git_0_Unknown   ctermfg=3  guifg=#f0c674
+hi Defx_git_0_Renamed   ctermfg=3  guifg=#de935f
+hi Defx_git_0_Modified  ctermfg=9  guifg=#cc6666
+hi Defx_git_0_Unmerged  ctermfg=14 guifg=#8abeb7
+hi Defx_git_0_Deleted   ctermfg=13 guifg=#b294bb
+hi Defx_git_0_Staged    ctermfg=10 guifg=#b5bd68
+
+
 " Git
 call defx#custom#column('git', 'indicators', {
-  \ 'Modified'  : '✚',
-  \ 'Staged'    : '●',
-  \ 'Untracked' : '?',
+  \ 'Modified'  : '✹',
+  \ 'Staged'    : '✚',
+  \ 'Untracked' : '✭',
   \ 'Renamed'   : '➜',
   \ 'Unmerged'  : 'שּׁ',
   \ 'Deleted'   : '✖',
@@ -3338,5 +3352,3 @@ endfunction
 " }}}
 
 " }}}
-
-
