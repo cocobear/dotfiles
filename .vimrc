@@ -872,7 +872,8 @@ noremap duu "_dd
 " Make Y consistent with C and D
 noremap Y y$
 " Ignore end of line character (carriage return, ^M) when yanking with yy
-noremap yy mz0y$`z
+" 2yy not work and p not start at newline so comment this
+"noremap yy mz0y$`z
 " Put (paste) text after or before current line
 noremap <silent> <Leader>p :put<CR>
 noremap <silent> <Leader>P :put!<CR>
