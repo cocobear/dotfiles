@@ -95,6 +95,7 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
     call dein#add('luochen1990/rainbow')
     call dein#add('mhinz/vim-startify')
     call dein#add('mg979/vim-visual-multi')
+    call dein#add('junegunn/fzf.vim')
 
     " Colorschemes
     call dein#add('petobens/colorish', {'frozen': 1})
@@ -1326,6 +1327,8 @@ augroup END
 " Rainbow {{{
 
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+" Add homebrew fzf to the vim path:
+set rtp+=/usr/local/opt/fzf
 
 " }}}
 
