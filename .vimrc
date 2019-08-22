@@ -131,6 +131,7 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
                 \ {'on_ft' : 'javascript', 'build': 'npm install'})
     call dein#add('chrisbra/Colorizer', {'on_cmd': 'ColorToggle'})
     call dein#add('Glench/Vim-Jinja2-Syntax')
+    call dein#add('posva/vim-vue')
 
     " Latex
     call dein#add('lervag/vimtex', {'on_ft' : ['tex', 'bib']})
@@ -1086,6 +1087,7 @@ augroup END
 augroup ft_html
     au!
     au Filetype html setlocal shiftwidth=2 tabstop=2 softtabstop=2
+    au Filetype vue setlocal shiftwidth=2 tabstop=2 softtabstop=2
     " au FileType html nnoremap <buffer><silent> <F7> :silent! ! start %<CR>
 augroup END
 
