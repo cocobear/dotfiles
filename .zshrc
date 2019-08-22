@@ -121,6 +121,8 @@ alias ll='ls -alh --group-directories-first --git --time-style=iso'
 alias la='ls -a --group-directories-first'
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# zsh tab completion : case-insensitive matching only if there are no case-sensitive matches
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 
 # color ssh
