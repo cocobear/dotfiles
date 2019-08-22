@@ -92,10 +92,10 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
     call dein#add('liuchengxu/vista.vim')
     call dein#add('SirVer/ultisnips')
     call dein#add('dhruvasagar/vim-zoom')
-    call dein#add('luochen1990/rainbow')
     call dein#add('mhinz/vim-startify')
     call dein#add('mg979/vim-visual-multi')
     call dein#add('junegunn/fzf.vim')
+    call dein#add('luochen1990/rainbow')
 
     " Colorschemes
     call dein#add('petobens/colorish', {'frozen': 1})
@@ -125,13 +125,14 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
     endif
 
     " Javascript and html
+    call dein#add('othree/html5.vim', {'on_ft': ['html', 'pug', 'jedi']})
     call dein#add('pangloss/vim-javascript', {'on_ft' : 'javascript'})
     call dein#add('carlitux/deoplete-ternjs', {'on_ft' : 'javascript'})
     call dein#add('ternjs/tern_for_vim',
                 \ {'on_ft' : 'javascript', 'build': 'npm install'})
     call dein#add('chrisbra/Colorizer', {'on_cmd': 'ColorToggle'})
     call dein#add('Glench/Vim-Jinja2-Syntax')
-    call dein#add('posva/vim-vue')
+    call dein#add('posva/vim-vue', {'on_ft': 'vue'})
 
     " Latex
     call dein#add('lervag/vimtex', {'on_ft' : ['tex', 'bib']})
