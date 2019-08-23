@@ -127,7 +127,8 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 # color ssh
 source $HOME/.config/functions/iTerm2-ssh
-alias ssh="colorssh"
+# alias ssh="colorssh"
+[[ -n "$TMUX" ]] && unalias ssh || alias ssh="colorssh"
 
 # prompt_context() {
 #  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
