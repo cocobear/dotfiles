@@ -130,6 +130,41 @@ source $HOME/.config/functions/iTerm2-ssh
 # alias ssh="colorssh"
 [[ -n "$TMUX" ]] && unalias ssh || alias ssh="colorssh"
 
+ssh() {
+    # ssh wrapper function to set tmux window (pane?) title
+
+    # bypass this function if stdout is not a terminal, to avoid messing up
+    # the output with our printf() calls.
+    [[ -t 1 ]] || exec command ssh $@
+
+    local prev_window_name=$(tmux display-message -p "#{window_name}")
+    local prev_pane_title=$(tmux display-message -p "#{pane_title}")
+    local hostname=$(perl -e 'if (length(@ARGV) == 1) { print $ARGV[0]; exit; } else { foreach $h (@ARGV) { if ($h =~ /[a-z\._-]+\.[a-z]{2,}/) { print $h; exit; } } }' -- $@)
+
+    if [[ -z $hostname ]]; then
+        command ssh $@
+    else
+        # Set window name and pane title when there's only 1 pane (i.e. the whole window),
+        # otherwise set just the pane title.
+        if [[ $(tmux display-message -p "#{window_panes}") == 1 ]]; then
+            #printf "\033k${hostname}\033\\"
+            #printf "\033]2;${hostname}\033\\"
+            tmux set -g pane-border-format "${hostname}"
+            tmux rename-window $hostname
+        else
+            #printf "\033]2;${hostname}\033\\"
+            tmux set -g pane-border-format "${hostname}"
+        fi
+        command ssh $@
+        if [[ $(tmux display-message -p "#{window_panes}") == 1 ]]; then
+            #printf "\033k${prev_window_name}\033\\"
+            tmux rename-window ${prev_window_name}
+        fi
+        #printf "\033]2;${prev_pane_title}\033\\"
+        tmux set -g pane-border-format '#{pane_current_path}'
+    fi
+}
+
 # prompt_context() {
 #  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
   #  prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"

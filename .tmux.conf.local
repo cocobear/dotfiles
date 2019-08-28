@@ -300,8 +300,12 @@ tmux_conf_copy_to_os_clipboard=false
 #set -g status-position top
 
 
+set -g pane-border-status top
+set -g pane-border-format '#{pane_current_path}'
 set -g automatic-rename off
 set-window-option -g automatic-rename
+set-option -g automatic-rename on
+set-option -g automatic-rename-format '#{b:pane_current_path}'
 
 set-option -g allow-rename off
 
@@ -310,14 +314,17 @@ set -g @tpm_plugins '          \
   tmux-plugins/tpm             \
   tmux-plugins/tmux-sensible   \
   tmux-plugins/tmux-resurrect  \
-  tmux-plugins/tmux-continuum  \
+#  tmux-plugins/tmux-continuum  \
+  soyuka/tmux-current-pane-hostname     \
   laktak/extrakto              \
 '
 
 # Continuum and resurrect (use C-r to restore)
-set -g @continuum-save-interval '3'
+#set -g @continuum-save-interval '15'
+#set -g @continuum-restore 'on'
 set -g @resurrect-capture-pane-contents 'on'
-set -g @resurrect-processes 'ssh mosh-client pgcli mssql-cli litecli ranger fzf'
+set -g @resurrect-processes 'vi nvim vim mysql ssh mosh-client pgcli mssql-cli litecli ranger fzf'
+set -g @resurrect-strategy-nvim 'session'
 
 # Extrakto
 set -g @extrakto_key "tab"
