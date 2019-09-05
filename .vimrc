@@ -95,7 +95,8 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
     call dein#add('mhinz/vim-startify')
     call dein#add('mg979/vim-visual-multi')
     call dein#add('junegunn/fzf.vim')
-    call dein#add('luochen1990/rainbow')
+    call dein#add('valloric/MatchTagAlways', {'on_ft': ['html']})
+    call dein#add('airblade/vim-rooter')
 
     " Colorschemes
     call dein#add('petobens/colorish', {'frozen': 1})
@@ -193,6 +194,7 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
         call dein#add('christoomey/vim-tmux-navigator')
         call dein#add('wellle/tmux-complete.vim')
         call dein#add('tmux-plugins/vim-tmux-focus-events')
+        call dein#add('tpope/vim-obsession')
     endif
 
     " Workarounds
@@ -324,6 +326,9 @@ silent! call s:MakeDirIfNoExists(&backupdir)
 
 " Enable syntax highlighting
 syntax enable
+
+" deal with highlighting breaks after jump or search
+set redrawtime=10000
 
 " Use guicolors in terminal (we seem to need to place this here)
 set termguicolors
@@ -853,6 +858,7 @@ nnoremap <silent> <Leader>em :e $DOTVIM/vimrc_min<CR>
 " Change working directory to that of the current file (autochdir seems to
 " conflict with some plugins)
 nnoremap <silent> <Leader>cd :lcd %:h<CR>
+" autocmd BufEnter * silent! :lcd%:p:h
 
 " Source current file
 nnoremap <Leader>so :update<CR>:so %<CR>
@@ -1327,9 +1333,8 @@ augroup END
 " }}}
 " Plugin settings {{{
 
-" Rainbow {{{
+" fzf {{{
 
-let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 " Add homebrew fzf to the vim path:
 set rtp+=/usr/local/opt/fzf
 
@@ -1419,7 +1424,7 @@ endfunction
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline#extensions#tabline#buffer_nr_format = '%s:'
 let g:airline#extensions#tabline#buffer_min_count = 2
 let airline#extensions#tabline#disable_refresh = 1
