@@ -86,7 +86,9 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
     if exists(':tnoremap')
         call dein#add('kassio/neoterm')
     endif
-    call dein#add('scrooloose/nerdcommenter')
+
+    " easy code commenting
+    call dein#add('tomtom/tcomment_vim')
     call dein#add('justinmk/vim-sneak')
     call dein#add('majutsushi/tagbar')
     call dein#add('liuchengxu/vista.vim')
