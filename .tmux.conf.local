@@ -64,7 +64,7 @@ tmux_conf_theme_pane_border_style=thin
 
 # pane borders colours:
 tmux_conf_theme_pane_border='#444444'                   # gray
-tmux_conf_theme_pane_active_border='#00afff'            # light blue
+tmux_conf_theme_pane_active_border='default'            # light blue
 
 # pane indicator colours
 tmux_conf_theme_pane_indicator='#00afff'                # light blue
@@ -301,7 +301,10 @@ tmux_conf_copy_to_os_clipboard=false
 
 
 set -g pane-border-status top
-set -g pane-border-format '#{pane_current_path}'
+set -g pane-border-format '#(sh ~/.config/functions/pane-border-format.sh \
+  --pane-current-path=#{pane_current_path} \
+  --pane-active=#{pane_active})'
+set -s status-interval 1
 set -g automatic-rename off
 set-window-option -g automatic-rename
 set-option -g automatic-rename on
