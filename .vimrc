@@ -87,8 +87,7 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
         call dein#add('kassio/neoterm')
     endif
 
-    " easy code commenting
-    call dein#add('tomtom/tcomment_vim')
+    call dein#add('tomtom/tcomment_vim') " easy code commenting
     call dein#add('justinmk/vim-sneak')
     call dein#add('majutsushi/tagbar')
     call dein#add('liuchengxu/vista.vim')
@@ -99,6 +98,10 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
     call dein#add('junegunn/fzf.vim')
     call dein#add('valloric/MatchTagAlways', {'on_ft': ['html']})
     call dein#add('airblade/vim-rooter')
+    call dein#add('itchyny/vim-cursorword') " underline words under cursor
+    call dein#add('Chiel92/vim-autoformat') " format documents
+    call dein#add('vim-scripts/Auto-Pairs')
+
 
     " Colorschemes
     call dein#add('petobens/colorish', {'frozen': 1})
@@ -449,7 +452,7 @@ set diffopt=internal,filler,indent-heuristic,algorithm:histogram
 " Search, jumps and matching pairs {{{
 
 if executable('rg')
-    set grepprg=rg\ --smart-case\ --vimgrep\ --no-heading
+    set grepprg=rg\ --smart-case\ --vimgrep\ --no-heading\ --hidden
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
@@ -1335,13 +1338,25 @@ augroup END
 " }}}
 " Plugin settings {{{
 
+" vim-rooter {{{
+
+let g:rooter_patterns = [ '.git/','.vimroot', 'setup.py', 'Pipfile', 'package.json', 'requirements.txt', 'Makefile']
+
+
+" }}}
 " fzf {{{
 
 " Add homebrew fzf to the vim path:
 set rtp+=/usr/local/opt/fzf
 
-" }}}
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --hidden --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
 
+" }}}
 " Airline {{{
 
 " Vim settings
@@ -1833,7 +1848,7 @@ endif
 if executable('rg')
     call denite#custom#var('grep', 'command', ['rg'])
     call denite#custom#var('grep', 'default_opts',
-            \ ['--smart-case', '--vimgrep', '--no-heading'])
+            \ ['--smart-case', '--vimgrep', '--no-heading', '--hidden'])
     call denite#custom#var('grep', 'recursive_opts', [])
     call denite#custom#var('grep', 'pattern_opt', [])
     call denite#custom#var('grep', 'separator', ['--'])
@@ -1859,8 +1874,6 @@ function! s:DeniteGrep(...)
         echoerr 'ripgrep is not installed or not in  your path.'
         return
     endif
-    let l:save_pwd = getcwd()
-    lcd %:p:h
     let narrow_dir = input('Target: ', '.', 'file')
     if narrow_dir ==# ''
         return
@@ -1869,7 +1882,7 @@ function! s:DeniteGrep(...)
     let extra_args = ''
     let git_ignore = get(a:, 1, 1)
     if git_ignore == 0
-        let extra_args = '--no-ignore-vcs '
+        let extra_args = '--no-ignore-vcs --hidden'
     endif
     let filetype = input('Filetype: ', '')
     if filetype ==# ''
@@ -1877,7 +1890,6 @@ function! s:DeniteGrep(...)
     else
         let ft_filter = '--type ' . filetype
     endif
-    execute 'lcd ' . l:save_pwd
     call denite#start([{'name': 'grep',
                 \ 'args': [narrow_dir, extra_args . ft_filter]}],
                 \ {'start_filter': 0})
@@ -1912,9 +1924,9 @@ nnoremap <silent> <Leader>rd :Denite fast_file_mru<CR>
 nnoremap <silent> <Leader>be :Denite buffer<CR>
 nnoremap <silent> <Leader>tl :call <SID>DeniteTasklist()<CR>
 nnoremap <silent> <Leader>tL :call <SID>DeniteTasklist('.')<CR>
-nnoremap <silent> <Leader>rg :lcd %:p:h<CR>:call <SID>DeniteGrep()<CR>
-nnoremap <silent> <Leader>rG :lcd %:p:h<CR>:call <SID>DeniteGrep(0)<CR>
-nnoremap <silent> <Leader>dg :lcd %:p:h<CR>:DeniteCursorWord -no-start-filter
+nnoremap <silent> <Leader>rg <CR>:call <SID>DeniteGrep()<CR>
+nnoremap <silent> <Leader>rG <CR>:call <SID>DeniteGrep(0)<CR>
+nnoremap <silent> <Leader>dg <CR>:DeniteCursorWord -no-start-filter
             \ grep<CR>
 nnoremap <silent> <Leader>he :Denite help<CR>
 nnoremap <silent> <Leader>yh :Denite neoyank<CR>
