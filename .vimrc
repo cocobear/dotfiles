@@ -1783,6 +1783,7 @@ nnoremap <silent> <Leader>bl :Denite dein<CR>
 
 " Change default UI settings and highlighting
 call denite#custom#option('default', {
+            \ 'split': 'floating',
             \ 'auto_resize': 1,
             \ 'auto_resume': 1,
             \ 'statusline': 0,
@@ -1926,7 +1927,7 @@ nnoremap <silent> <Leader>tl :call <SID>DeniteTasklist()<CR>
 nnoremap <silent> <Leader>tL :call <SID>DeniteTasklist('.')<CR>
 nnoremap <silent> <Leader>rg <CR>:call <SID>DeniteGrep()<CR>
 nnoremap <silent> <Leader>rG <CR>:call <SID>DeniteGrep(0)<CR>
-nnoremap <silent> <Leader>dg <CR>:DeniteCursorWord -no-start-filter
+nnoremap <silent> <Leader>dg :DeniteCursorWord -no-start-filter
             \ grep<CR>
 nnoremap <silent> <Leader>he :Denite help<CR>
 nnoremap <silent> <Leader>yh :Denite neoyank<CR>
