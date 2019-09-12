@@ -104,7 +104,7 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
 
 
     " Colorschemes
-    call dein#add('petobens/colorish', {'frozen': 1})
+    call dein#add('petobens/colorish')
     "call dein#add('tomasr/molokai')
     call dein#add('morhetz/gruvbox')
     "call dein#add('vim-airline/vim-airline-themes')
@@ -339,7 +339,7 @@ set redrawtime=10000
 set termguicolors
 
 " Highlight todos colons in red
-set iskeyword+=:
+" set iskeyword+=:
 augroup hl_todos
     au!
     " FIXME: Bib highlight (and sometimes others too) not working?
@@ -644,7 +644,7 @@ set virtualedit=block,onemore
 
 " Add transparency for floating windows
 if has('nvim')
-    set winblend=5
+    set winblend=30
 endif
 
 " }}}
@@ -1489,8 +1489,8 @@ augroup END
 
 " Actually set the colorscheme and airline theme
 let g:one_allow_italics = 1  " use italics with onedarkish theme
-"colorscheme onedarkish  " alternatives are heraldish and onedarkish
-colorscheme gruvbox
+colorscheme heraldish  " alternatives are heraldish and onedarkish
+"colorscheme gruvbox
 "colorscheme molokai
 let g:airline_theme = g:colors_name
 "let g:airline_theme = 'molokai'
@@ -1790,10 +1790,10 @@ call denite#custom#option('default', {
             \ 'winheight': 15,
             \ 'winminheight': -1,
             \ 'reversed': 1,
-            \ 'prompt': '❯',
-            \ 'highlight_prompt': 'Function',
-            \ 'highlight_matched_char': 'Operator',
-            \ 'highlight_matched_range': 'None',
+			\ 'prompt' : '➭',
+            \ 'highlight_matched_char': 'Function',
+            \ 'highlight_prompt': 'StatusLine',
+			\ 'direction': 'rightbelow',
             \ 'vertical_preview': 1,
             \ 'start_filter': 1,
             \ 'filter_updatetime': 100,
@@ -1802,8 +1802,8 @@ call denite#custom#option('default', {
 " Fruzzy matcher
 let g:fruzzy#usenative = 0
 let g:fruzzy#sortonempty = 0
-call denite#custom#source('_', 'matchers', ['matcher/fruzzy',
-        \ 'matcher/ignore_globs'])
+"" call denite#custom#source('_', 'matchers', ['matcher/fruzzy',
+        " \ 'matcher/ignore_globs'])
 
 " Other matcher and sorting options
 call denite#custom#source('line', 'matchers', ['matcher/regexp'])
@@ -1848,10 +1848,15 @@ if executable('fd')
 endif
 if executable('rg')
     call denite#custom#var('grep', 'command', ['rg'])
+    " Custom options for ripgrep
+    "   --vimgrep:  Show results with every match on it's own line
+    "   --hidden:   Search hidden directories and files
+    "   --heading:  Show the file name above clusters of matches from each file
+    "   --smart-case:        Search case insensitively if the pattern is all lowercase
     call denite#custom#var('grep', 'default_opts',
             \ ['--smart-case', '--vimgrep', '--no-heading', '--hidden'])
     call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', [])
+    call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
     call denite#custom#var('grep', 'separator', ['--'])
     call denite#custom#var('grep', 'final_opts', [])
 endif
@@ -1908,27 +1913,28 @@ command! -nargs=? -complete=file DeniteBookmarkAdd
         \ :Denite dirmark/add -default-action=add -immediately-1 -path=<q-args>
 
 " Mappings
-nnoremap <silent> <C-t> :DeniteBufferDir file/rec<CR>
-nnoremap <silent> <A-t> :DeniteBufferDir file/rec/noignore<CR>
-nnoremap <silent> <Leader>ls :DeniteBufferDir file/rec<CR>
-nnoremap <silent> <Leader>lS :DeniteBufferDir file/rec/noignore<CR>
+nnoremap <silent> <C-t> :DeniteProjectDir file/rec<CR>
+nnoremap <silent> <A-t> :DeniteProjectDir file/rec/noignore<CR>
+nnoremap <silent> <Leader>lS :DeniteProjectDir file/rec/noignore<CR>
+nnoremap <silent> <Leader>ls :DeniteProjectDir file/rec<CR>
 nnoremap <silent> <Leader>lu :execute 'Denite file/rec:' . expand('%:p:h:h')<CR>
 nnoremap <silent> <Leader>lU :execute 'Denite file/rec/noignore:' .
             \ expand('%:p:h:h')<CR>
 nnoremap <silent> <Leader>sd :call <SID>DeniteScanDir()<CR>
 nnoremap <silent> <Leader>sD :call <SID>DeniteScanDir(0)<CR>
 nnoremap <silent> <A-z> :Denite z<CR>
-nnoremap <silent> <A-c> :DeniteBufferDir directory_rec<CR>
-nnoremap <silent> <A-d> :DeniteBufferDir directory_rec/noignore<CR>
-nnoremap <silent> <A-p> :DeniteBufferDir -no-start-filter parent_dirs<CR>
+nnoremap <silent> <A-c> :DeniteProjectDir directory_rec<CR>
+nnoremap <silent> <A-d> :DeniteProjectDir directory_rec/noignore<CR>
+nnoremap <silent> <A-p> :DeniteProjectDir -no-start-filter parent_dirs<CR>
 nnoremap <silent> <Leader>rd :Denite fast_file_mru<CR>
 nnoremap <silent> <Leader>be :Denite buffer<CR>
 nnoremap <silent> <Leader>tl :call <SID>DeniteTasklist()<CR>
 nnoremap <silent> <Leader>tL :call <SID>DeniteTasklist('.')<CR>
 nnoremap <silent> <Leader>rg <CR>:call <SID>DeniteGrep()<CR>
 nnoremap <silent> <Leader>rG <CR>:call <SID>DeniteGrep(0)<CR>
+" search cursorword in current dir
 nnoremap <silent> <Leader>dg :DeniteCursorWord -no-start-filter
-            \ grep<CR>
+            \ grep:.<CR>
 nnoremap <silent> <Leader>he :Denite help<CR>
 nnoremap <silent> <Leader>yh :Denite neoyank<CR>
 nnoremap <silent> <Leader>sh :Denite history:search<CR>
@@ -1937,6 +1943,7 @@ nnoremap <silent> <Leader>sm :Denite output:messages<CR>
 nnoremap <silent> <Leader>me :Denite output:map<CR>
 nnoremap <silent> <Leader>uf :Denite output:function<CR>
 nnoremap <silent> <Leader>dl :Denite line:forward<CR>
+" search cursorword in current buffer
 nnoremap <silent> <Leader>dw :DeniteCursorWord -auto-action=preview
             \ line:forward -no-start-filter<CR>
 nnoremap <silent> <Leader>dq :Denite -post-action=suspend quickfix<CR>
