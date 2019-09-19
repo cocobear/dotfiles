@@ -78,7 +78,6 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
     call dein#add('vim-airline/vim-airline')
     call dein#add('gioele/vim-autoswap')
     call dein#add('junegunn/vim-easy-align')
-    call dein#add('jamessan/vim-gnupg')
     call dein#add('machakann/vim-highlightedyank')
     call dein#add('Yggdroot/indentLine')
     call dein#add('simnalamburt/vim-mundo', {'on_cmd' : 'MundoToggle'})
@@ -644,7 +643,7 @@ set virtualedit=block,onemore
 
 " Add transparency for floating windows
 if has('nvim')
-    set winblend=30
+    set winblend=5
 endif
 
 " }}}
@@ -1489,7 +1488,7 @@ augroup END
 
 " Actually set the colorscheme and airline theme
 let g:one_allow_italics = 1  " use italics with onedarkish theme
-colorscheme heraldish  " alternatives are heraldish and onedarkish
+colorscheme onedarkish " alternatives are heraldish and onedarkish
 "colorscheme gruvbox
 "colorscheme molokai
 let g:airline_theme = g:colors_name
@@ -1793,6 +1792,7 @@ call denite#custom#option('default', {
 			\ 'prompt' : '➭',
             \ 'highlight_matched_char': 'Function',
             \ 'highlight_prompt': 'StatusLine',
+            \ 'highlight_window_background': 'Visual',
 			\ 'direction': 'rightbelow',
             \ 'vertical_preview': 1,
             \ 'start_filter': 1,
