@@ -229,31 +229,30 @@ ssh_connected() {
 get_remote_info() {
     local command=$1
 
-  # First get the current pane command pid to get the full command with arguments
-  local cmd=$({ pgrep -flaP `tmux display-message -p "#{pane_pid}"` ; ps -o command -p `tmux display-message -p "#{pane_pid}"` ; } | xargs -I{} echo {} | grep ssh | sed -E 's/^[0-9]*[[:blank:]]*ssh //')
+    # First get the current pane command pid to get the full command with arguments
+    local cmd=$({ pgrep -flaP `tmux display-message -p "#{pane_pid}"` ; ps -o command -p `tmux display-message -p "#{pane_pid}"` ; } | xargs -I{} echo {} | grep ssh | sed -E 's/^[0-9]*[[:blank:]]*ssh //')
 
-  local port=$(parse_ssh_port "$cmd")
+    local port=$(parse_ssh_port "$cmd")
 
-  local cmd=$(echo $cmd|sed 's/\-p '"$port"'//g')
+    local cmd=$(echo $cmd|sed 's/\-p '"$port"'//g')
 
-  local user=$(echo $cmd | awk '{print $NF}'|cut -f1 -d@)
-  local host=$(echo $cmd | awk '{print $NF}'|cut -f2 -d@)
+    local user=$(echo $cmd | awk '{print $NF}'|cut -f1 -d@)
+    local host=$(echo $cmd | awk '{print $NF}'|cut -f2 -d@)
 
-  if [ $user == $host ]; then
-      local user=$(get_ssh_user $host)
-  fi
+    if [ $user == $host ]; then
+        local user=$(get_ssh_user $host)
+    fi
 
-  if ssh_connected; then
-      echo "$user@$host:$port"
-  else
-      echo $PRETTY_PATH
-  fi
+    if ssh_connected; then
+        echo "$user@$host:$port"
+    else
+        echo $PRETTY_PATH
+    fi
 }
 
 
-# final output
-dir_bg='#3CF87D'
-echo $(cd $PANE_CURRENT_PATH && git_prompt)
+#echo " $PANE_CURRENT_PATH"
+echo $(cd "$PANE_CURRENT_PATH" && git_prompt)
 
 #echo " #[fg=#282c34,bg=#C69DFD,bold] $(get_remote_info) #[fg=#C69DFD,bg=$(color $YELLOW),bold]$(cd $PANE_CURRENT_PATH && git_prompt) "
 #echo " #[fg=#282c34,bg=#C69DFD,bold] $(get_remote_info)#[fg=#C69DFD,bg=#3CF87D,bold]#[fg=#282c34,bg=#3CF87D,bold]   master  #[fg=#3CF87D,bg=#24272e,bold]"
