@@ -48,6 +48,7 @@ cast 'vlc'
 cask 'iterm2'
 cask 'typora'
 cask 'hammerspoon'
+cask 'keycastr'
 # Databases
 brew 'mongodb'
 brew 'mysql'
