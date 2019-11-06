@@ -149,7 +149,7 @@ POWERLEVEL9K_CONTEXT_TEMPLATE="%n"
 #POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 #POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 if [ -z "$TMUX" ]; then
-    POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir virtualenv vcs)
+    POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir virtualenv anaconda vcs)
 else
     POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=()
 
@@ -160,8 +160,6 @@ POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%b%f%k%F{blue}%} %{%f%}"
 
 # eval $(thefuck --alias)
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/node@10/bin:$PATH"
-export PATH="./bin:$HOME/bin:/usr/local/sbin:$PATH"
 export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
@@ -215,3 +213,8 @@ fshow() {
     fi
   done
 }
+
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/node@10/bin:$PATH"
+export PATH="./bin:$HOME/bin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/miniconda3/bin:$PATH"
+source /usr/local/opt/miniconda3/etc/profile.d/conda.sh
