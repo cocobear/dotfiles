@@ -104,6 +104,7 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
 
     " Colorschemes
     call dein#add('petobens/colorish')
+    call dein#add('joshdick/onedark.vim')
     "call dein#add('tomasr/molokai')
     call dein#add('morhetz/gruvbox')
     "call dein#add('vim-airline/vim-airline-themes')
@@ -164,6 +165,7 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
 
     " TOML
     call dein#add('cespare/vim-toml', {'on_ft': 'toml'})
+    call dein#add('pearofducks/ansible-vim', {'on_ft': ['yaml','yml']})
 
     " Shougo plugins
     call dein#add('Shougo/dein.vim')
@@ -396,6 +398,8 @@ set ttimeoutlen=0
 " Encoding and fileformat {{{
 
 set encoding=utf-8
+set fencs=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+
 
 " Use unix conventions for line endings (even in MS Windows)
 set fileformat=unix
@@ -1119,6 +1123,15 @@ augroup ft_json
 augroup END
 
 " }}}
+
+" Yaml {{{
+
+augroup ft_yaml
+    au!
+    au Filetype yaml,yml setlocal shiftwidth=2 tabstop=2 softtabstop=2
+augroup END
+
+" }}}
 " (La)TeX {{{
 
 " Note: Most LaTeX settings are in the ftplugin folder
@@ -1488,8 +1501,8 @@ augroup END
 
 " Actually set the colorscheme and airline theme
 let g:one_allow_italics = 1  " use italics with onedarkish theme
-colorscheme onedarkish " alternatives are heraldish and onedarkish
-"colorscheme gruvbox
+"colorscheme onedarkish " alternatives are heraldish and onedarkish
+colorscheme onedark
 "colorscheme molokai
 let g:airline_theme = g:colors_name
 "let g:airline_theme = 'molokai'
