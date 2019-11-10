@@ -7,14 +7,6 @@ zmodload zsh/zprof
 POWERLEVEL9K_MODE='nerdfont-complete'
 
 # For zplugin
-### Zplugin install
-if [ ! -e ~/.zplugin/bin/zplugin.zsh ]; then
-  mkdir ~/.zplugin
-  git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
-
-  mkdir $ZDOTDIR/complete/my_completions
-  zplugin creinstall $ZDOTDIR/complete/my_completions  # > /dev/null
-fi
 ### Added by Zplugin's installer
 source ~/.zplugin/bin/zplugin.zsh
 autoload -Uz _zplugin
@@ -217,4 +209,4 @@ fshow() {
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/node@10/bin:$PATH"
 export PATH="./bin:$HOME/bin:/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/miniconda3/bin:$PATH"
-source /usr/local/opt/miniconda3/etc/profile.d/conda.sh
+source /usr/local/Caskroom/miniconda/base/etc/profile.d/conda.sh
