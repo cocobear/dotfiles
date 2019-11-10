@@ -1,10 +1,12 @@
 cask_args appdir: '/Applications'
 
-tap 'caskroom/cask'
 tap 'homebrew/bundle'
+tap 'homebrew/cask'
+tap 'homebrew/cask-fonts'
+
 
 # Fonts
-cask 'font-scurcecodepro-nerd-font'
+cask 'font-sourcecodepro-nerd-font'
 # Nerd fonts Source Code Pro version doesn't have italics so we install
 # the official version
 cask 'font-source-code-pro'
@@ -31,7 +33,7 @@ brew 'ripgrep'
 brew 'grc'
 brew 'tmux-xpanes'
 brew 'colordiff'
-brew 'diff-so-fancy
+brew 'diff-so-fancy'
 brew 'ssh-copy-id'
 brew 'highlight'
 brew 'exa'
@@ -43,8 +45,8 @@ brew 'mackup'
 
 # Apps
 #cask 'beyond-compare'
-cast 'docker'
-cast 'vlc'
+cask 'docker'
+cask 'vlc'
 cask 'iterm2'
 cask 'typora'
 cask 'hammerspoon'

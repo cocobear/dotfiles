@@ -100,17 +100,23 @@ install_nvim_plugins () {
 
 
 
+info 'install_cmd_tools'
 install_cmd_tools
+info 'install_homebrew'
 install_homebrew
 #install_ohmyzsh
+info 'install_zplug'
 install_zplug
 
 # Install apps
-#brew update
-#brew bundle
+brew update -v
+brew bundle -v
 
+info 'install_nvim_plugins'
 install_nvim_plugins
+info 'restore_with_mackup'
 restore_with_mackup
 
 # Set macOS defaults
+info 'set macOS'
 $DOTFILES_ROOT/macos/set-defaults.sh
