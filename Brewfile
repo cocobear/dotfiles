@@ -3,6 +3,7 @@ cask_args appdir: '/Applications'
 tap 'homebrew/bundle'
 tap 'homebrew/cask'
 tap 'homebrew/cask-fonts'
+tap 'mongodb/brew'
 
 
 # Fonts
@@ -25,7 +26,9 @@ brew 'neovim'
 brew 'tmux'
 
 # Other useful tool
-brew 'imgcat'
+brew 'zplug'
+brew 'fzf'
+brew 'eddieantonio/eddieantonio/imgcat'
 brew 'unrar'
 brew 'the_silver_searcher'
 brew 'fd'
@@ -41,17 +44,21 @@ brew 'exa'
 #brew 'git-flow'
 brew 'mackup'
 #brew 'trash'
-#brew 'tree'
+brew 'tree'
 
 # Apps
-#cask 'beyond-compare'
+cask 'qingg'
+cask 'shadowsocksx-ng'
+cask 'beyond-compare'
+cask 'google-chrome'
 cask 'docker'
 cask 'vlc'
 cask 'iterm2'
 cask 'typora'
 cask 'hammerspoon'
 cask 'keycastr'
+cask 'miniconda'
 # Databases
-brew 'mongodb'
+brew 'mongodb-community'
 brew 'mysql'
 brew 'redis'
