@@ -98,6 +98,18 @@ install_nvim_plugins () {
   info 'plug install finished'
 }
 
+install_zplugin () {
+  if [ ! -e ~/.zplugin/bin/zplugin.zsh ]; then
+  mkdir ~/.zplugin
+  git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
+
+  mkdir $ZDOTDIR/complete/my_completions
+  zplugin creinstall $ZDOTDIR/complete/my_completions  # > /dev/null
+  zplugin update
+  sudo chsh -s $(which zsh)
+  fi
+}
+
 
 
 info 'install_cmd_tools'
@@ -105,12 +117,12 @@ install_cmd_tools
 info 'install_homebrew'
 install_homebrew
 #install_ohmyzsh
-info 'install_zplug'
-install_zplug
+info 'install_zplugin'
+install_zplugin
 
 # Install apps
 brew update -v
-brew bundle -v
+brew bundle
 
 info 'install_nvim_plugins'
 install_nvim_plugins
