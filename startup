@@ -57,6 +57,13 @@ install_homebrew () {
     fi
 
   fi
+  # 替换为中科大的镜像
+  cd "$(brew --repo)"
+  git remote set-url origin https://mirrors.ustc.edu.cn/brew.git
+
+  cd "$(brew --repo)/Library/Taps/homebrew/homebrew-core"
+  git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
+
 }
 
 install_ohmyzsh () {
@@ -123,6 +130,8 @@ install_zplugin
 # Install apps
 brew update -v
 brew bundle
+
+pip3 install --user pynvim
 
 info 'install_nvim_plugins'
 install_nvim_plugins
