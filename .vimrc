@@ -115,7 +115,7 @@ if dein#load_state(expand('$DOTVIM/bundle/'))
     call dein#add('tpope/vim-repeat')
     call dein#add('tpope/vim-rhubarb')
     call dein#add('tpope/vim-surround')
-
+    call dein#add('vim-syntastic/syntastic')
     " Git
     call dein#add('airblade/vim-gitgutter')
     call dein#add('junegunn/gv.vim')
@@ -737,6 +737,10 @@ nnoremap - <C-x>
 noremap <Leader>q q
 map q <Nop>
 
+" Easy way to surround a word using surround.vim
+map sw 'ysiw'
+
+
 " }}}
 " Window and buffer manipulation {{{
 
@@ -1349,6 +1353,23 @@ augroup END
 
 " }}}
 " Plugin settings {{{
+
+" vim-syntastic {{{
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_enable_highlighting = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" ignore files of Ansible Roles.
+let g:syntastic_ignore_files = ['\m^roles/']
+
+
+" }}}
 
 " vim-rooter {{{
 
