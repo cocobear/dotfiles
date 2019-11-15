@@ -7,7 +7,7 @@ zmodload zsh/zprof
 POWERLEVEL9K_MODE='nerdfont-complete'
 
 # For zplugin
-### Added by Zplugin's installer
+# Added by Zplugin's installer
 source ~/.zplugin/bin/zplugin.zsh
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
@@ -27,6 +27,7 @@ zplugin load zdharma/history-search-multi-word
 
 zplugin snippet OMZ::lib/git.zsh
 zplugin snippet OMZ::plugins/git/git.plugin.zsh
+zplugin snippet OMZ::plugins/gitfast/gitfast.plugin.zsh
 zplugin snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
 zplugin snippet OMZ::plugins/extract/extract.plugin.zsh
 zplugin snippet OMZ::plugins/brew/brew.plugin.zsh
@@ -47,20 +48,20 @@ zplugin light chrissicool/zsh-256color
 #zplug "zsh-users/zsh-completions"
 #zplug "zsh-users/zsh-syntax-highlighting"
 #zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
-##zplug "robbyrussell/oh-my-zsh", as:plugin, use:"lib/*.zsh"
+#zplug "robbyrussell/oh-my-zsh", as:plugin, use:"lib/*.zsh"
 #
-##zplug "plugins/git",   from:oh-my-zsh
+#zplug "plugins/git",   from:oh-my-zsh
+#zplug "plugins/gitfast",   from:oh-my-zsh
 #zplug "plugins/extract",   from:oh-my-zsh
 #zplug "plugins/vi-mode",   from:oh-my-zsh
-##zplug "plugins/colored-man-pages", from:oh-my-zsh
+#zplug "plugins/colored-man-pages", from:oh-my-zsh
 #
-##zplug "knu/z", use:z.sh, defer:3
-##zplug "rupa/z", as:plugin, use:z.sh
-##zplug "b4b4r07/enhancd", use:init.sh
-##zplug "rimraf/k"
-##zplug "zsh-users/zsh-history-substring-search"
-##zplug "paulmelnikow/zsh-startup-timer"
-##zplug 'wfxr/forgit'
+#zplug "knu/z", use:z.sh, defer:3
+#zplug "rupa/z", as:plugin, use:z.sh
+#zplug "b4b4r07/enhancd", use:init.sh
+#zplug "rimraf/k"
+#zplug "zsh-users/zsh-history-substring-search"
+#zplug 'wfxr/forgit'
 #
 ## Install plugins if there are plugins that have not been installed
 #if ! zplug check --verbose; then
@@ -99,6 +100,8 @@ autoload ${fpath[1]}/*(:t)
 export HISTFILE=~/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
+unsetopt INC_APPEND_HISTORY
+unsetopt APPEND_HISTORY
 export EDITOR=vim
 
 
@@ -205,6 +208,9 @@ fshow() {
     fi
   done
 }
+
+# brew bottles中科大镜像
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/node@10/bin:$PATH"
 export PATH="./bin:$HOME/bin:/usr/local/sbin:$PATH"

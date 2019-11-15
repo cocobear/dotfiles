@@ -25,6 +25,9 @@ brew 'node'
 brew 'neovim'
 brew 'tmux'
 
+# DevOps 
+brew 'ansible'
+
 # Other useful tool
 brew 'zplug'
 brew 'fzf'
