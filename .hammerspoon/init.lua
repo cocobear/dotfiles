@@ -6,6 +6,7 @@
 
 -- Modifier shortcuts
 local cmd_ctrl = {"ctrl", "cmd"}
+local cmd_option = {"ctrl", "option"}
 
 -- Reload (auto) hotkey script
 hs.hotkey.bind(cmd_ctrl, "a", function()
@@ -42,15 +43,15 @@ function resize_win(x, y, w, h)
 	f.h = max.h * h
 	win:setFrame(f)
 end
-hs.hotkey.bind({"cmd"}, "left", function()
+hs.hotkey.bind({"cmd"}, "h", function()
                 resize_win(0,0,0.5,1) end) -- left
-hs.hotkey.bind({"cmd"}, "right", function()
+hs.hotkey.bind({"cmd"}, "l", function()
                 resize_win(0.5,0,0.5,1) end) -- right
-hs.hotkey.bind(cmd_ctrl, "up", function()
+hs.hotkey.bind(cmd_ctrl, "k", function()
                 resize_win(0,0,1,0.5) end) -- top
-hs.hotkey.bind(cmd_ctrl, "down", function()
+hs.hotkey.bind(cmd_ctrl, "j", function()
                 resize_win(0,0.5,1,0.5) end) -- bottom
-hs.hotkey.bind({"cmd"}, "up", function()
+hs.hotkey.bind({"cmd"}, "k", function()
                 resize_win(0,0,1,1) end) -- full
 hs.hotkey.bind(cmd_ctrl, "1", function()
                 resize_win(0,0,0.5,0.5) end) -- Top left quarter
@@ -90,7 +91,7 @@ hs.expose.ui.textSize = 30
 hs.expose.ui.nonVisibleStripWidth = 0.2
 hs.expose.ui.nonVisibleStripBackgroundColor = {0.08, 0.08, 0.08}
 expose = hs.expose.new()
-hs.hotkey.bind(cmd_ctrl, "j", function() expose:toggleShow() end)
+hs.hotkey.bind(cmd_ctrl, "e", function() expose:toggleShow() end)
 
 -- Window switcher (deprecates Hyperswitch)
 hs.window.switcher.ui.showSelectedThumbnail = false
@@ -125,10 +126,10 @@ function moveToMonitor(x)
     hs.mouse.setAbsolutePosition(center)
 end
 --  Use new method to move window to another monitor
-hs.hotkey.bind(cmd_ctrl,"right", function()
+hs.hotkey.bind(cmd_ctrl,"l", function()
   hs.window.focusedWindow():moveOneScreenEast()
 end)
-hs.hotkey.bind(cmd_ctrl,"left", function()
+hs.hotkey.bind(cmd_ctrl,"h", function()
   hs.window.focusedWindow():moveOneScreenWest()
 end)
 
@@ -168,39 +169,18 @@ hs.hotkey.bind({"alt"}, "`", focusNextScreen)
 
 -- hs.hotkey.bind(cmd_ctrl, "i", function()
                 -- hs.application.launchOrFocus("Firefox") end)
-hs.hotkey.bind(cmd_ctrl, "x", function()
-                hs.application.launchOrFocus("Microsoft Excel") end)
+hs.hotkey.bind(cmd_ctrl, "s", function()
+                hs.application.launchOrFocus("Sublime Text") end)
 hs.hotkey.bind(cmd_ctrl, "w", function()
                 hs.application.launchOrFocus("Microsoft Word") end)
 hs.hotkey.bind(cmd_ctrl, "i", function()
                 hs.application.launchOrFocus("Google Chrome") end)
 hs.hotkey.bind(cmd_ctrl, "g", function()
                 hs.application.launchOrFocus("Giphy Capture") end)
-hs.hotkey.bind(cmd_ctrl, "s", function()
-                hs.application.launchOrFocus("Skype") end)
-hs.hotkey.bind(cmd_ctrl, "l", function()
-                hs.application.launchOrFocus("Slack") end)
-hs.hotkey.bind(cmd_ctrl, "p", function()
-                hs.application.launchOrFocus("Skim") end)
-hs.hotkey.bind(cmd_ctrl, "f", function()
-                hs.application.launchOrFocus("Finder") end)
 hs.hotkey.bind(cmd_ctrl, "t", function()
                 hs.application.launchOrFocus("iTerm") end)
-hs.hotkey.bind(cmd_ctrl, "u", function()
-                hs.application.launchOrFocus("Vuze") end)
-hs.hotkey.bind(cmd_ctrl, "m", function()
-                hs.application.launchOrFocus("Spotify") end)
 hs.hotkey.bind(cmd_ctrl, "d", function()
                 hs.execute("open ~/Downloads/") end)
-
--- Alacritty
-hs.hotkey.bind(cmd_ctrl, "c", function()
-    hs.execute('alacritty -e /usr/bin/bash -l -c "/usr/bin/bash -i -c tm"')
-    local console_app = hs.application.find("Alacritty")
-    while not console_app:isFrontmost() do
-        console_app:activate()
-    end
-end)
 
 -- }}}
 -- Spotify and volume {{{
@@ -250,7 +230,7 @@ end)
 -- }}}
 -- Toggle hidden files {{{
 
-hs.hotkey.bind(cmd_ctrl, "h", function()
+hs.hotkey.bind(cmd_option, "h", function()
     hidden_status = hs.execute("defaults read com.apple.finder " ..
                                 "AppleShowAllFiles")
     if hidden_status == "YES\n"  then
