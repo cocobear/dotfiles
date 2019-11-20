@@ -81,7 +81,11 @@ git_branch () {
     #branch="${ref#refs/heads/}"
     ref=$(command git symbolic-ref HEAD 2> /dev/null)
     _branch="${ref#refs/heads/}"
-    branch=" ${ref#refs/heads/}"
+    if [[ "${_branch}x" != "x" ]]; then
+        branch=" ${ref#refs/heads/}"
+    else
+        branch=""
+    fi
 }
 
 git_tagname() {
@@ -156,7 +160,8 @@ git_prompt () {
     git_aheadbehind
     git_stash
     #echo " #[fg=#282c34,bg=#C69DFD,bold] $(get_remote_info)#[fg=#C69DFD,bg=#3CF87D,bold]#[fg=#282c34,bg=#3CF87D,bold]   master  #[fg=#3CF87D,bg=#24272e,bold]"
-
+    _result="$_result #[fg=$BLACK,bg=$(color $BROWN),bold] 
+        $(get_remote_info)"
     if [[ "${branch}x" != "x" ]]; then
         git_info="$git_info$ZSH_THEME_GIT_PROMPT_PREFIX$branch"
         if [[ "${_status}x" != "x" ]]; then
@@ -167,16 +172,18 @@ git_prompt () {
             git_info="$git_info $misc  "
         fi
         git_info="$git_info"
+    else
+        _result="$_result #[fg=$(color $BROWN),bg=#282c34,bold]"
+        echo $_result
+        return
     fi
 
     if [[ "${_status}"x != "x" ]]; then
-        _result="$_result #[fg=$BLACK,bg=$(color $BROWN),bold] 
-        $(get_remote_info) #[fg=$(color $BROWN),bg=$(color $YELLOW),bold]
+        _result="$_result #[fg=$(color $BROWN),bg=$(color $YELLOW),bold]
         #[fg=$BLACK,bg=$(color $YELLOW),bold] "
         _result="$_result $git_info #[fg=$(color $YELLOW),bg=#282c34,bold]"
     else
-        _result="$_result #[fg=$BLACK,bg=$(color $BROWN),bold] 
-        $(get_remote_info) #[fg=$(color $BROWN),bg=$(color $GREEN),bold]
+        _result="$_result #[fg=$(color $BROWN),bg=$(color $GREEN),bold]
         #[fg=$BLACK,bg=$(color $GREEN),bold] "
         _result="$_result $git_info #[fg=$(color $GREEN),bg=#282c34,bold]"
     fi
@@ -244,7 +251,7 @@ get_remote_info() {
     fi
 
     if ssh_connected; then
-        echo "$user@$host:$port"
+        echo " $user@$host:$port"
     else
         echo $PRETTY_PATH
     fi
