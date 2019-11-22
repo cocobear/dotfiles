@@ -76,7 +76,7 @@ tmux_conf_theme_message_bg='#E0FF7F'                    # yellow
 tmux_conf_theme_message_attr='bold'
 
 # status line command style (<prefix> : Escape)
-tmux_conf_theme_message_command_fg='#282c34'            # yellow
+tmux_conf_theme_message_command_fg='#080808'            # yellow
 tmux_conf_theme_message_command_bg='#ffff00'            # black
 tmux_conf_theme_message_command_attr='bold'
 
@@ -87,7 +87,7 @@ tmux_conf_theme_mode_attr='bold'
 
 # status line style
 tmux_conf_theme_status_fg='#abb2bf'                     # light gray
-tmux_conf_theme_status_bg='#282c34'                     # dark gray
+tmux_conf_theme_status_bg='#080808'                     # dark gray
 tmux_conf_theme_status_attr='bold'
 
 # terminal title
@@ -108,12 +108,12 @@ tmux_conf_theme_terminal_title='❐ #S ● #I #W'
 #     - #{hostname_ssh}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_window_status_fg='#ffffff'              # light gray
-tmux_conf_theme_window_status_bg='#282c34'              # dark gray
+tmux_conf_theme_window_status_fg='#8a8a8a'              # light gray
+tmux_conf_theme_window_status_bg='#080808'              # dark gray
 tmux_conf_theme_window_status_attr='bold'
 tmux_conf_theme_window_status_format='#I #W'
 #tmux_conf_theme_window_status_format='#{circled_window_index} #W'
-tmux_conf_theme_window_status_format='#I #W#{?window_bell_flag,🔔,}#{?window_zoomed_flag,🔍,}'
+tmux_conf_theme_window_status_format='#{circled_window_index} #{?window_bell_flag,🔔,}#{?window_zoomed_flag,🔍,}#(if [[ -n "#{hostname_ssh}"  ]]; then echo "";else echo "#W";fi) #(echo "#{hostname_ssh}" | cut -d. -f4)'
 
 # window current status style
 #   - built-in variables are:
@@ -128,7 +128,7 @@ tmux_conf_theme_window_status_current_bg='#61afef'      # light blue
 tmux_conf_theme_window_status_current_attr='bold'
 tmux_conf_theme_window_status_current_format='#I #W'
 tmux_conf_theme_window_status_current_format='#{circled_window_index} #W'
-tmux_conf_theme_window_status_current_format='#I #W#{?window_zoomed_flag,🔍,}'
+tmux_conf_theme_window_status_current_format='#{circled_window_index} #{?window_zoomed_flag,🔍,}#(if [[ -n "#{hostname_ssh}"  ]]; then echo "";else echo "#W"; fi) #(echo "#{hostname_ssh}" )'
 
 # window activity status style
 tmux_conf_theme_window_status_activity_fg='default'
@@ -180,19 +180,16 @@ tmux_conf_theme_right_separator_sub='\uE0B3'  #   PowerlineSymbols.otf font, see
 #     - #{username}
 #     - #{username_ssh}
 
-tmux_conf_theme_status_left=\
-'#{?client_prefix,#[fg=#24272e]#[bg=#98c379]#[bold] T '\
-'#[fg=#98c379]#[bg=#d0d0d0]#[nobold]#[fg=#282c34]#[bg=#d0d0d0]#[bold],'\
-'#[fg=#282c34]#[bg=#d0d0d0]#[bold]} ❐ #S '
-tmux_conf_theme_status_right='#(curl wttr.in?format=+%%c+%%t)#[fg=#828997,bg=#282c34,nobold]  %H:%M #[fg=#3b4048,bg=#282c34,nobold]#[fg=#abb2bf,bg=#3b4048,nobold] %m-%d %a#[fg=#d0d0d0,bg=#3b4048,nobold]#[fg=#282c34,bg=#d0d0d0,bold]|#{username_ssh}|#{hostname_ssh} '
+tmux_conf_theme_status_left=' ❐ #S'
+tmux_conf_theme_status_right='#{prefix} #(curl wttr.in?format=+%%c+%%t)  %H:%M %m-%d %a |#{username_ssh}| #{hostname_ssh} '
 
 # status left style
-#tmux_conf_theme_status_left_fg='#000000,#282c34,#ffffff'  # black, white , white
+#tmux_conf_theme_status_left_fg='#000000,#080808,#ffffff'  # black, white , white
 tmux_conf_theme_status_left_bg='#d0d0d0,#d0d0d0,#ffffff'  # yellow, pink, white blue
 tmux_conf_theme_status_left_attr='bold,bold,bold'
 
 #tmux_conf_theme_status_right_fg='#8a8a8a,#e4e4e4,#000000' # light gray, white, black
-tmux_conf_theme_status_right_bg='#282c34,#d70000,#e4e4e4' # dark gray, red, white
+tmux_conf_theme_status_right_bg='#080808,#d70000,#e4e4e4' # dark gray, red, white
 tmux_conf_theme_status_right_attr='none,bold,bold'
 
 # pairing indicator
@@ -297,20 +294,18 @@ tmux_conf_copy_to_os_clipboard=false
 # bind C-a send-prefix
 
 # move status line to top
-#set -g status-position top
+set -g status-position top
 
 
-set -g pane-border-status top
+set -g pane-border-status bottom
 set -g pane-border-format '#(sh ~/.config/functions/pane-border-format.sh \
   --pane-current-path="#{pane_current_path}" \
   --pane-active=#{pane_active})'
-set -s status-interval 1
+set -g status-interval 1
 set -g automatic-rename off
-set-window-option -g automatic-rename
-set-option -g automatic-rename on
-set-option -g automatic-rename-format '#{b:pane_current_path}'
-
 set-option -g allow-rename off
+set-option -g automatic-rename off
+
 
 # List of plugins
 set -g @tpm_plugins '          \
