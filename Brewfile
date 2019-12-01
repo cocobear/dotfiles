@@ -25,11 +25,10 @@ brew 'node'
 brew 'neovim'
 brew 'tmux'
 
-# DevOps 
+# DevOps
 brew 'ansible'
 
 # Other useful tool
-brew 'zplug'
 brew 'fzf'
 brew 'eddieantonio/eddieantonio/imgcat'
 brew 'unrar'
@@ -61,6 +60,7 @@ cask 'typora'
 cask 'hammerspoon'
 cask 'keycastr'
 cask 'miniconda'
+cask 'karabiner-elements'
 # Databases
 brew 'mongodb-community'
 brew 'mysql'
