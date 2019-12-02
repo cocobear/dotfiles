@@ -89,7 +89,7 @@ restore_with_mackup () {
   if [ ! -f ~/.mackup.cfg ]
   then
     info ' copy mackup.cfg'
-    cp .mackup.cfg ~/
+    cp $DOTFILES_ROOT/.mackup.cfg ~/
   fi
   mackup restore
 }
@@ -110,10 +110,10 @@ install_zplugin () {
   mkdir ~/.zplugin
   git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
 
-  mkdir $ZDOTDIR/complete/my_completions
-  zplugin creinstall $ZDOTDIR/complete/my_completions  # > /dev/null
+  #mkdir $ZDOTDIR/complete/my_completions
+  #zplugin creinstall $ZDOTDIR/complete/my_completions  # > /dev/null
+  chsh -s $(which zsh)
   zplugin update
-  sudo chsh -s $(which zsh)
   fi
 }
 
