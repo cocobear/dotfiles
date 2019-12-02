@@ -1,6 +1,6 @@
 {
 	"auto_find_in_selection": true,
-	"color_scheme": "Packages/gruvbox/gruvbox (Dark) (Medium) NDC.tmTheme",
+	"color_scheme": "Packages/gruvbox/gruvbox (Dark) (Medium).tmTheme",
 	"default_line_endings": "unix",
 	"editor.fontFamily": "Source Code Pro, Consolas, 'Courier New', monospace",
 	"font_face": "Source Code Pro",
@@ -18,7 +18,7 @@
 		"ZZZ"
 	],
 	"tab_size": 4,
-	"theme": "Adaptive.sublime-theme",
+	"theme": "Gravity One.sublime-theme",
 	"theme_accent_purple": false,
 	"theme_bar": true,
 	"theme_bar_shadow_hidden": false,

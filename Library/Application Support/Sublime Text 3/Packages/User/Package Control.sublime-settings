@@ -11,10 +11,7 @@
 	],
 	"http_proxy": "http://127.0.0.1:1087",
 	"https_proxy": "http://127.0.0.1:1087",
-	"in_process_packages":
-	[
-		"IMESupport"
-	],
+
 	"installed_packages":
 	[
 		"A File Icon",
@@ -35,8 +32,6 @@
 		"GitGutter",
 		"gruvbox",
 		"HTML-CSS-JS Prettify",
-		"IMESupport",
-		"MarkdownHighlighting",
 		"MarkdownPreview",
 		"Package Control",
 		"RawLineEdit",
