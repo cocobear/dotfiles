@@ -301,7 +301,7 @@ set -g pane-border-status bottom
 set -g pane-border-format '#(sh ~/.config/functions/pane-border-format.sh \
   --pane-current-path="#{pane_current_path}" \
   --pane-active=#{pane_active})'
-set -g status-interval 1
+set -g status-interval 10
 set -g automatic-rename off
 set-option -g allow-rename off
 set-option -g automatic-rename off
