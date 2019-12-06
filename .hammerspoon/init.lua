@@ -6,6 +6,7 @@
 
 -- Modifier shortcuts
 local cmd_ctrl = {"ctrl", "cmd"}
+local cmd_shift = {"shift", "cmd"}
 local cmd_option = {"ctrl", "option"}
 
 -- Reload (auto) hotkey script
@@ -43,15 +44,15 @@ function resize_win(x, y, w, h)
 	f.h = max.h * h
 	win:setFrame(f)
 end
-hs.hotkey.bind({"cmd"}, "h", function()
+hs.hotkey.bind(cmd_shift, "h", function()
                 resize_win(0,0,0.5,1) end) -- left
-hs.hotkey.bind({"cmd"}, "l", function()
+hs.hotkey.bind(cmd_shift, "l", function()
                 resize_win(0.5,0,0.5,1) end) -- right
 hs.hotkey.bind(cmd_ctrl, "k", function()
                 resize_win(0,0,1,0.5) end) -- top
 hs.hotkey.bind(cmd_ctrl, "j", function()
                 resize_win(0,0.5,1,0.5) end) -- bottom
-hs.hotkey.bind({"cmd"}, "k", function()
+hs.hotkey.bind(cmd_shift, "k", function()
                 resize_win(0,0,1,1) end) -- full
 hs.hotkey.bind(cmd_ctrl, "1", function()
                 resize_win(0,0,0.5,0.5) end) -- Top left quarter
@@ -185,12 +186,6 @@ hs.hotkey.bind(cmd_ctrl, "d", function()
 -- }}}
 -- Spotify and volume {{{
 
-hs.hotkey.bind({"cmd", "shift"}, 't', function()
-                                        hs.spotify.displayCurrentTrack() end)
-hs.hotkey.bind({"cmd", "shift"}, 'p', function() hs.spotify.playpause() end)
-hs.hotkey.bind({"cmd", "shift"}, 'j', function() hs.spotify.next() end)
-hs.hotkey.bind({"cmd", "shift"}, 'k', function() hs.spotify.previous() end)
-
 -- Volume control
 hs.hotkey.bind({"cmd", "shift"}, '=', function()
     local audio_output = hs.audiodevice.defaultOutputDevice()
@@ -288,6 +283,6 @@ hs.hotkey.bind(cmd_ctrl, "b", function() hs.execute("rm -rf ~/.Trash/*")
 local vimouse = require('vimouse')
 require "modules/hotkey"
 require "modules/windows"
-vimouse({'shift', 'cmd'}, 'h')
+vimouse({'shift', 'cmd'}, 'm')
 
 -- }}}
