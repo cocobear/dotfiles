@@ -48,12 +48,14 @@ hs.hotkey.bind(cmd_shift, "h", function()
                 resize_win(0,0,0.5,1) end) -- left
 hs.hotkey.bind(cmd_shift, "l", function()
                 resize_win(0.5,0,0.5,1) end) -- right
-hs.hotkey.bind(cmd_ctrl, "k", function()
-                resize_win(0,0,1,0.5) end) -- top
-hs.hotkey.bind(cmd_ctrl, "j", function()
-                resize_win(0,0.5,1,0.5) end) -- bottom
 hs.hotkey.bind(cmd_shift, "k", function()
+                resize_win(0,0,1,0.5) end) -- top
+hs.hotkey.bind(cmd_shift, "j", function()
+                resize_win(0,0.5,1,0.5) end) -- bottom
+
+hs.hotkey.bind(cmd_shift, "return", function()
                 resize_win(0,0,1,1) end) -- full
+
 hs.hotkey.bind(cmd_ctrl, "1", function()
                 resize_win(0,0,0.5,0.5) end) -- Top left quarter
 hs.hotkey.bind(cmd_ctrl, "2", function()
@@ -256,7 +258,7 @@ hs.hotkey.bind({"shift", "cmd"}, "5", function()
 -- Miscellaneous {{{
 
 -- Lockscreen
-hs.hotkey.bind({"shift", "cmd"}, "l", function()
+hs.hotkey.bind({"ctrl","shift", "cmd"}, "l", function()
                 hs.caffeinate.lockScreen()
                 end)
 
