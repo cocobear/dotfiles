@@ -67,13 +67,6 @@ hs.hotkey.bind(cmd_ctrl, "4", function()
 hs.hotkey.bind(cmd_ctrl, "5", function()
                 resize_win(0.25,0.25,0.5,0.5) end) -- Center
 
--- (Expand) to full screen (we use OSX default Cmd + F to open finder)
-hs.hotkey.bind(cmd_ctrl, "e", function()
-        local win = hs.window.focusedWindow()
-        if win ~= nil then
-            win:setFullScreen(not win:isFullScreen())
-        end
-    end)
 
 -- Change window width (setting the grid first)
 hs.grid.MARGINX = 0
