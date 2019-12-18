@@ -19,7 +19,7 @@ brew 'coreutils'
 # Languages: Python3, node
 brew 'python3'
 brew 'pyenv'
-brew 'node'
+brew 'nvm'
 
 # Neovim and tmux
 brew 'neovim'
