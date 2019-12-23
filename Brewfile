@@ -47,6 +47,8 @@ brew 'exa'
 brew 'mackup'
 #brew 'trash'
 brew 'tree'
+brew 'aria2'
+brew 'packer'
 
 # Apps
 cask 'qingg'
@@ -61,6 +63,7 @@ cask 'hammerspoon'
 cask 'keycastr'
 cask 'miniconda'
 cask 'karabiner-elements'
+cask 'vagrant'
 # Databases
 brew 'mongodb-community'
 brew 'mysql'
