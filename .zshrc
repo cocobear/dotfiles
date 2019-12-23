@@ -146,7 +146,7 @@ POWERLEVEL9K_CONTEXT_TEMPLATE="%n"
 if [ -z "$TMUX" ]; then
     POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir virtualenv anaconda vcs)
 else
-    POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=()
+    POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv anaconda)
 
 fi
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
@@ -214,5 +214,4 @@ export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/node@10/bin:$PATH"
 export PATH="./bin:$HOME/bin:/usr/local/sbin:$PATH"
-export PATH="/usr/local/opt/miniconda3/bin:$PATH"
 source /usr/local/Caskroom/miniconda/base/etc/profile.d/conda.sh
