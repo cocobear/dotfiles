@@ -1,0 +1,8 @@
+
+" Case insensitive search (* search remains case sensitive)
+set ignorecase
+" Case sensitive when upper case present
+set smartcase
+
+let g:mapleader = ' '    " Default for mappings is now space character instead of /
+inoremap jk <ESC>
