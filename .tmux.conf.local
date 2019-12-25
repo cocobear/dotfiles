@@ -296,6 +296,7 @@ tmux_conf_copy_to_os_clipboard=false
 # move status line to top
 set -g status-position top
 
+set -g mouse on
 
 set -g pane-border-status bottom
 set -g pane-border-format '#(sh ~/.config/functions/pane-border-format.sh \
