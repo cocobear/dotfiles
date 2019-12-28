@@ -1,0 +1,10 @@
+{
+    "editor.fontFamily": "'SauceCodePro Nerd Font', 'Source Code Pro'",
+    "editor.fontSize": 16,
+    "terminal.external.osxExec": "iTerm.app",
+    "terminal.integrated.cursorBlinking": true,
+    // "terminal.integrated.enableBold": true,
+    "terminal.integrated.fontFamily": "'SauceCodePro Nerd Font'",
+    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.rightClickCopyPaste": true,
+}
