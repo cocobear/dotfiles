@@ -20,6 +20,7 @@ brew 'coreutils'
 brew 'python3'
 brew 'pyenv'
 brew 'nvm'
+brew 'yarn'
 
 # Neovim and tmux
 brew 'neovim'
