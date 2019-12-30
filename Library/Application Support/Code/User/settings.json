@@ -7,4 +7,5 @@
     "terminal.integrated.fontFamily": "'SauceCodePro Nerd Font'",
     "terminal.integrated.fontSize": 16,
     "terminal.integrated.rightClickCopyPaste": true,
+    "workbench.colorTheme": "Darcula",
 }
