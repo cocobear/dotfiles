@@ -208,6 +208,9 @@ fshow() {
   done
 }
 
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 # brew bottles中科大镜像
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
