@@ -23,7 +23,7 @@ switches:
 
 engine:
   processors:
-    - ascii_composer
+    #- ascii_composer
     - recognizer
     - key_binder
     - speller
