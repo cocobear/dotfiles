@@ -2,7 +2,9 @@
 -- following:
 -- https://github.com/Hammerspoon/hammerspoon/blob/master/CONTRIBUTING.md#making-frequent-local-rebuilds-more-convenient
 
--- Preamble {{{
+hs.loadSpoon("KSheet")
+
+-- Preamble {{{
 
 -- Modifier shortcuts
 local cmd_ctrl = {"ctrl", "cmd"}
@@ -11,8 +13,8 @@ local cmd_option = {"ctrl", "option"}
 
 -- Reload (auto) hotkey script
 hs.hotkey.bind(cmd_ctrl, "a", function()
-  hs.reload()
   hs.alert("Hammerspoon config was reloaded.")
+  hs.reload()
 end)
 
 -- Don't perform animations when resizing
@@ -81,19 +83,26 @@ hs.hotkey.bind(cmd_ctrl, "=", function()
 end)
 
 -- Expose (show thumbnails of open windows with a hint)
-hs.expose.ui.otherSpacesStripWidth = 0  -- I don't use other spaces
-hs.expose.ui.highlightThumbnailStrokeWidth = 5
-hs.expose.ui.textSize = 30
-hs.expose.ui.nonVisibleStripWidth = 0.2
-hs.expose.ui.nonVisibleStripBackgroundColor = {0.08, 0.08, 0.08}
+-- hs.expose.ui.otherSpacesStripWidth = 0  -- I don't use other spaces
+-- hs.expose.ui.highlightThumbnailStrokeWidth = 0
+hs.expose.ui.backgroundColor = {0, 0, 0, 0.1}
+hs.expose.ui.highlightThumbnailStrokeWidth = 0
+hs.expose.ui.showTitles = false
+-- hs.expose.ui.textSize = 30
+hs.expose.ui.nonVisibleStripWidth = 0
+hs.expose.ui.otherSpacesStripWidth = 0
 expose = hs.expose.new()
-hs.hotkey.bind(cmd_ctrl, "e", function() expose:toggleShow() end)
+-- show desktop then show fake mission control
+hs.hotkey.bind(cmd_ctrl, "e", function()
+    hs.eventtap.keyStroke("fn", "F11")
+    expose:toggleShow()
+end)
 
 -- Window switcher (deprecates Hyperswitch)
 hs.window.switcher.ui.showSelectedThumbnail = false
 hs.window.switcher.ui.showTitles = false
 hs.window.switcher.ui.textSize = 12
-hs.window.switcher.ui.thumbnailSize = 180
+hs.window.switcher.ui.thumbnailSize = 280
 hs.window.switcher.ui.backgroundColor = {0.2, 0.2, 0.2, 0.3} -- Greyish
 hs.window.switcher.ui.titleBackgroundColor = {0, 0, 0, 0} -- Transparent
 hs.window.switcher.ui.textColor = {0, 0, 0} -- Black
@@ -103,6 +112,20 @@ switcher = hs.window.switcher.new(
                 hs.window.filter.new():setCurrentSpace(true):setDefaultFilter{})
 hs.hotkey.bind("alt", "tab", function() switcher:next() end)
 
+switcher = hs.window.switcher.new(
+    hs.window.filter.new()
+        :setAppFilter('Emacs', {allowRoles = '*', allowTitles = 1}), -- make emacs window show in switcher list
+    {
+        showTitles = false,               -- don't show window title
+        thumbnailSize = 300,              -- window thumbnail size
+        showSelectedThumbnail = false,    -- don't show bigger thumbnail
+        backgroundColor = {0.2, 0.2, 0.2, 0.3}, -- Greyish
+        highlightColor = {0.3, 0.3, 0.3, 0.8}, -- selected color
+    }
+    )
+    hs.hotkey.bind("option", "tab", function()
+		   switcher:next()
+       end)
 -- }}}
 -- Multiple monitors handling {{{
 
@@ -163,20 +186,68 @@ hs.hotkey.bind({"alt"}, "`", focusNextScreen)
 -- }}}
 -- Run or activate app {{{
 
--- hs.hotkey.bind(cmd_ctrl, "i", function()
-                -- hs.application.launchOrFocus("Firefox") end)
-hs.hotkey.bind(cmd_ctrl, "s", function()
-                hs.application.launchOrFocus("Sublime Text") end)
-hs.hotkey.bind(cmd_ctrl, "w", function()
-                hs.application.launchOrFocus("Microsoft Word") end)
-hs.hotkey.bind(cmd_ctrl, "i", function()
-                hs.application.launchOrFocus("Google Chrome") end)
-hs.hotkey.bind(cmd_ctrl, "g", function()
-                hs.application.launchOrFocus("Giphy Capture") end)
-hs.hotkey.bind(cmd_ctrl, "t", function()
-                hs.application.launchOrFocus("iTerm") end)
-hs.hotkey.bind(cmd_ctrl, "d", function()
-                hs.execute("open ~/Downloads/") end)
+-- Key to launch application.
+local key2App = {
+    t = {'/Applications/iTerm.app', 'English'},
+    c = {'/Applications/Google Chrome.app', 'English'},
+    f = {'/System/Library/CoreServices/Finder.app', 'English'},
+    w = {'/Applications/WeChat.app', 'Chinese'},
+    s = {'/Applications/System Preferences.app', 'English'},
+    d = {'/Applications/Dash.app', 'English'},
+    p = {'/Applications/PyCharm.app', 'English'},
+    v = {'/Applications/Visual Studio Code.app', 'English'},
+    q = {'/Applications/QQ.app', 'Chinese'},
+    m = {'/Applications/Typora.app', 'Chinese'}
+}
+-- Show launch application's keystroke.
+local showAppKeystrokeAlertId = ""
+
+local function showAppKeystroke()
+    if showAppKeystrokeAlertId == "" then
+        -- Show application keystroke if alert id is empty.
+        local keystroke = ""
+        local keystrokeString = ""
+        for key, app in pairs(key2App) do
+            keystrokeString = string.format("%-10s%s", key:upper(), app[1]:match("^.+/(.+)$"):gsub(".app", ""))
+
+            if keystroke == "" then
+                keystroke = keystrokeString
+            else
+                keystroke = keystroke .. "\n" .. keystrokeString
+            end
+        end
+
+        showAppKeystrokeAlertId = hs.alert.show(keystroke, hs.alert.defaultStyle, hs.screen.mainScreen(), 10)
+    else
+        -- Otherwise hide keystroke alert.
+        hs.alert.closeSpecific(showAppKeystrokeAlertId)
+        showAppKeystrokeAlertId = ""
+    end
+end
+
+hs.hotkey.bind(cmd_ctrl, "z", showAppKeystroke)
+function launchApp(app)
+
+    local appPath = app[1]
+    -- We need use Chrome's remote debug protocol that debug JavaScript code in Emacs.
+    -- So we need launch chrome with --remote-debugging-port argument instead application.launchOrFocus.
+    if appPath == "/Applications/Google Chrome.app" then
+        hs.execute("open -a 'Google Chrome' --args '--remote-debugging-port=9222'")
+    else
+        hs.application.launchOrFocus(appPath)
+    end
+end
+local mouseCircle = nil
+local mouseCircleTimer = nil
+
+-- Start or focus application.
+for key, app in pairs(key2App) do
+    hs.hotkey.bind(
+        cmd_ctrl, key,
+        function()
+            launchApp(app)
+    end)
+end
 
 -- }}}
 -- Spotify and volume {{{
@@ -250,6 +321,33 @@ hs.hotkey.bind({"shift", "cmd"}, "5", function()
 -- }}}
 -- Miscellaneous {{{
 
+-- Show application keystroke window.
+local ksheetIsShow = false
+local ksheetAppPath = ""
+
+hs.hotkey.bind(
+    cmd_ctrl, "R",
+    function ()
+        local currentAppPath = hs.window.focusedWindow():application():path()
+
+        -- Toggle ksheet window if cache path equal current app path.
+        if ksheetAppPath == currentAppPath then
+            if ksheetIsShow then
+                spoon.KSheet:hide()
+                ksheetIsShow = false
+            else
+                spoon.KSheet:show()
+                ksheetIsShow = true
+            end
+            -- Show app's keystroke if cache path not equal current app path.
+        else
+            spoon.KSheet:show()
+            ksheetIsShow = true
+
+            ksheetAppPath = currentAppPath
+        end
+    end)
+
 -- Lockscreen
 hs.hotkey.bind({"ctrl","shift", "cmd"}, "l", function()
                 hs.caffeinate.lockScreen()
@@ -280,4 +378,81 @@ require "modules/hotkey"
 require "modules/windows"
 vimouse({'shift', 'cmd'}, 'm')
 
+-- }}}
+-- show inputmethod {{{
+
+local function Chinese()
+    hs.keycodes.currentSourceID("im.rime.inputmethod.Squirrel.Rime")
+end
+
+local function English()
+    hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
+end
+
+
+function showAppInputMethod(appName, eventType, appObject)
+    if (eventType == hs.application.watcher.activated) then
+        showInputMethod()
+    end
+end
+
+function updateFocusAppInputMethod(appName, eventType, appObject)
+    if (eventType == hs.application.watcher.activated) then
+        local default = true
+        for index, app in pairs(key2App) do
+            if app[1] == appObject:path() then
+                default = false
+                if app[2] == 'Chinese' then
+                    Chinese()
+                else
+                    English()
+                end
+            end
+        end
+        if default then
+            English()
+        end
+        showInputMethod()
+    end
+end
+
+appWatcher = hs.application.watcher.new(updateFocusAppInputMethod)
+appWatcher:start()
+
+  hs.eventtap.new({hs.eventtap.event.types.keyUp}, function(event)
+      -- print(event:getKeyCode())
+      -- print(hs.inspect.inspect(event:getFlags()))
+
+     if event:getKeyCode() == 49  and event:getFlags().ctrl then
+         showInputMethod(true)
+     end
+   end):start()
+
+function showInputMethod(reverse)
+   -- 用于保存当前输入法
+    local currentSourceID = hs.keycodes.currentSourceID()
+    local tag
+    print(currentSourceID)
+    hs.alert.closeSpecific(showUUID)
+
+    if (currentSourceID == "com.apple.keylayout.ABC") then
+        if reverse then
+            tag = '中'
+        else
+            tag = 'A'
+        end
+    else
+        if reverse then
+            tag = 'A'
+        else
+            tag = '中'
+        end
+    end
+    showUUID = hs.alert.show(tag, screens)
+end
+
+-- hs.keycodes.inputSourceChanged(function ()
+--     print('changed!')
+--     showInputMethod()
+-- end)
 -- }}}
