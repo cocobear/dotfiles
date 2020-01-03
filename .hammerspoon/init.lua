@@ -390,12 +390,6 @@ local function English()
 end
 
 
-function showAppInputMethod(appName, eventType, appObject)
-    if (eventType == hs.application.watcher.activated) then
-        showInputMethod()
-    end
-end
-
 function updateFocusAppInputMethod(appName, eventType, appObject)
     if (eventType == hs.application.watcher.activated) then
         local default = true
@@ -412,8 +406,8 @@ function updateFocusAppInputMethod(appName, eventType, appObject)
         if default then
             English()
         end
-        showInputMethod()
     end
+    showInputMethod()
 end
 
 appWatcher = hs.application.watcher.new(updateFocusAppInputMethod)
